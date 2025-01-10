@@ -1,8 +1,14 @@
 啟動：
-    go run .
+```
+go run .
+```
 
 路徑啟動在：
-    http://localhost:6382
+```
+http://localhost:6382
+```
 
 測試：
-    http://localhost:6382/api/test
+```
+http://localhost:6382/api/test
+```

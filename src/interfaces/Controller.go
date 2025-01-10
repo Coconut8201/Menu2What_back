@@ -1,9 +1,9 @@
 package interfaces
 
 import (
-	"github.com/gin-gonic/gin"
+    "github.com/gin-gonic/gin"
 )
 
 type Controller interface {
-	Test(c *gin.Context)
+    Test(c *gin.Context)
 }
