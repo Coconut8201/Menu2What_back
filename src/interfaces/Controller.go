@@ -1,9 +1,9 @@
 package interfaces
 
 import (
-	"net/http"
+	"github.com/gin-gonic/gin"
 )
 
 type Controller interface {
-	Test(req *http.Request, res http.ResponseWriter)
+	Test(c *gin.Context)
 }

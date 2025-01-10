@@ -1,9 +1,15 @@
 package controllers
 
 import (
-	"Menu2What_back/src/interfaces"
+	"github.com/gin-gonic/gin"
 )
 
-type testController struct {
-	interfaces.Controller
+type TestController struct {
+}
+
+// Test handles the test endpoint
+func (t *TestController) Test(c *gin.Context) {
+	c.JSON(200, gin.H{
+		"message": "test success",
+	})
 }
