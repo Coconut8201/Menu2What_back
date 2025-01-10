@@ -17,6 +17,6 @@ func main() {
 		})
 	})
 
-	fmt.Println("服務器啟動在 :8080")
-	engine.Run(":8080")
+	fmt.Println("服務器啟動在 :6382")
+	engine.Run(":6382")
 }
