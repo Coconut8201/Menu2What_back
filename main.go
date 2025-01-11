@@ -3,15 +3,15 @@ package main
 import (
 	"Menu2What_back/routers"
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"log"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	engine := gin.Default()
 
-	// 新增路由在這邊
-	routers.NewTestRouter(engine.Group(""))
+	routers.SetupRouters(engine)
 
 	engine.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
