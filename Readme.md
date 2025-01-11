@@ -1,5 +1,5 @@
 待辦事項:
-- [] 加入gemini api
+- [ ] 加入gemini api
 
 
 下載依賴：
