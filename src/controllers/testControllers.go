@@ -13,3 +13,9 @@ func (t *TestController) Test(c *gin.Context) {
         "message": "test success",
     })
 }
+
+func (t *TestController) Aaa(c *gin.Context) {
+    c.JSON(200, gin.H{
+        "message": "test success",
+    })
+}
