@@ -4,6 +4,7 @@ import (
 	"Menu2What_back/src/controllers"
 	"Menu2What_back/src/interfaces"
 	"fmt"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -21,8 +22,8 @@ func NewTestRouter(router *gin.RouterGroup) *TestRouter {
 	return testRouter
 }
 
-func (r *TestRouter) Init(url string, controller interfaces.Controller, router *gin.RouterGroup) {
-	r.ctrl = controller.(interfaces.TestInterface)
+func (r *TestRouter) Init(url string, controller interfaces.TestInterface, router *gin.RouterGroup) {
+	r.ctrl = controller
 	r.BaseRoute.Init(url, controller, router)
 }
 
