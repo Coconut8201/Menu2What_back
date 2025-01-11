@@ -6,5 +6,4 @@ import (
 
 type Controller interface {
 	Test(c *gin.Context)
-	Aaa(c *gin.Context)
 }

@@ -2,9 +2,11 @@ package controllers
 
 import (
 	"github.com/gin-gonic/gin"
+	"Menu2What_back/src/interfaces"
 )
 
 type TestController struct {
+	interfaces.TestInterface
 }
 
 // Test handles the test endpoint
