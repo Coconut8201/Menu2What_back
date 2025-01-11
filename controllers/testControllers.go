@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"github.com/gin-gonic/gin"
-	"Menu2What_back/src/interfaces"
+	"Menu2What_back/interfaces"
 )
 
 type TestController struct {

@@ -1,8 +1,8 @@
 package routers
 
 import (
-	"Menu2What_back/src/controllers"
-	"Menu2What_back/src/interfaces"
+	"Menu2What_back/controllers"
+	"Menu2What_back/interfaces"
 	"fmt"
 
 	"github.com/gin-gonic/gin"

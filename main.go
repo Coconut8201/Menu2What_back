@@ -2,6 +2,7 @@ package main
 
 import (
 	"Menu2What_back/routers"
+	"Menu2What_back/utils/Logger"
 	"fmt"
 	"log"
 
@@ -19,9 +20,13 @@ func main() {
 		})
 	})
 
+	logger, err := Logger.NewLogger(Logger.INFO)
+	if err != nil {
+		log.Fatal(err)
+	}
 	fmt.Println("服務器啟動在 :6382")
 	fmt.Println("http://localhost:6382/ping")
 	if err := engine.Run(":6382"); err != nil {
-		log.Fatal("Server startup error:", err)
+		logger.Fatal("Server startup error: %v", err)
 	}
 }
