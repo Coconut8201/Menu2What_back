@@ -10,7 +10,7 @@ import (
 
 type TestRouter struct {
 	interfaces.BaseRoute
-	ctrl interfaces.TestController
+	ctrl interfaces.TestInterface
 }
 
 func NewTestRouter(router *gin.RouterGroup) *TestRouter {
@@ -23,7 +23,7 @@ func NewTestRouter(router *gin.RouterGroup) *TestRouter {
 }
 
 func (r *TestRouter) Init(url string, controller interfaces.Controller, router *gin.RouterGroup) {
-	r.ctrl = controller.(interfaces.TestController)
+	r.ctrl = controller.(interfaces.TestInterface)
 	r.BaseRoute.Init(url, controller, router)
 }
 
