@@ -5,21 +5,26 @@
 - [ ] 修改確認是否需要上傳pdf 的功能
 - [ ] 修復logger 系統
 
-下載依賴：
+1. 下載：
+```
+clone https://github.com/Coconut8201/Menu2What_back.git
+cd Menu2What_back
+```
+複製.env.example 到 .env：
+```
+cp .env.example .env
+```
+gemini api key (必填)
+
+
+2. 下載依賴：
 ```
 go mod tidy
 ```
-
-**開發工具：**
-```
-air
-```
-
-啟動：
+3. 啟動：
 ```
 go run .
 ```
-
 路徑啟動在：
 ```
 http://localhost:6382
@@ -38,4 +43,10 @@ swag init
 Swagger API Docs:
 ```
 http://localhost:6382/swagger/index.html#/
+```
+
+
+**開發工具：**
+```
+air
 ```
