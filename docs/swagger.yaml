@@ -30,37 +30,7 @@ info:
   title: Menu2What API
   version: "1.0"
 paths:
-  /api:
-    post:
-      consumes:
-      - application/json
-      description: 傳送訊息到 Gemini AI 並獲取回應
-      parameters:
-      - description: 請求內容
-        in: body
-        name: request
-        required: true
-        schema:
-          $ref: '#/definitions/controllers.GeminiAPIRequest'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/controllers.GeminiAPIResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/controllers.GeminiAPIErrorResponse'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/controllers.GeminiAPIErrorResponse'
-      summary: Gemini AI API
-      tags:
-      - gemini
-  /api/image:
+  /gemini/api/image_and_text:
     post:
       consumes:
       - multipart/form-data
@@ -92,6 +62,36 @@ paths:
           schema:
             $ref: '#/definitions/controllers.GeminiAPIErrorResponse'
       summary: Gemini AI 圖文分析 API
+      tags:
+      - gemini
+  /gemini/api/text_only:
+    post:
+      consumes:
+      - application/json
+      description: 傳送訊息到 Gemini AI 並獲取回應
+      parameters:
+      - description: 請求內容
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.GeminiAPIRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.GeminiAPIResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/controllers.GeminiAPIErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controllers.GeminiAPIErrorResponse'
+      summary: Gemini AI API
       tags:
       - gemini
 swagger: "2.0"

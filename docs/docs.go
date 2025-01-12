@@ -15,53 +15,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api": {
-            "post": {
-                "description": "傳送訊息到 Gemini AI 並獲取回應",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "gemini"
-                ],
-                "summary": "Gemini AI API",
-                "parameters": [
-                    {
-                        "description": "請求內容",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/controllers.GeminiAPIRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/controllers.GeminiAPIResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/controllers.GeminiAPIErrorResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/controllers.GeminiAPIErrorResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/image": {
+        "/gemini/api/image_and_text": {
             "post": {
                 "description": "上傳圖片和文字到 Gemini AI 並獲取分析回應",
                 "consumes": [
@@ -88,6 +42,52 @@ const docTemplate = `{
                         "name": "image",
                         "in": "formData",
                         "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.GeminiAPIResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.GeminiAPIErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.GeminiAPIErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/gemini/api/text_only": {
+            "post": {
+                "description": "傳送訊息到 Gemini AI 並獲取回應",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "gemini"
+                ],
+                "summary": "Gemini AI API",
+                "parameters": [
+                    {
+                        "description": "請求內容",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controllers.GeminiAPIRequest"
+                        }
                     }
                 ],
                 "responses": {

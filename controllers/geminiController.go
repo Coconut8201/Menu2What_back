@@ -52,7 +52,7 @@ func (g *GeminiController) Test(c *gin.Context) {
 // @Success      200  {object}  GeminiAPIResponse
 // @Failure      400  {object}  GeminiAPIErrorResponse
 // @Failure      500  {object}  GeminiAPIErrorResponse
-// @Router       /api [post]
+// @Router       /gemini/api/text_only [post]
 func (g *GeminiController) GeminiApiTextOnly(c *gin.Context) {
 	var req GeminiAPIRequest
 
@@ -101,7 +101,7 @@ func (g *GeminiController) GeminiApiTextOnly(c *gin.Context) {
 // @Success      200  {object}  GeminiAPIResponse
 // @Failure      400  {object}  GeminiAPIErrorResponse
 // @Failure      500  {object}  GeminiAPIErrorResponse
-// @Router       /api/image [post]
+// @Router       /gemini/api/image_and_text [post]
 func (g *GeminiController) GeminiApiImageAndText(c *gin.Context) {
 	var req GeminiAPIRequestImageAndText
 	if err := c.ShouldBind(&req); err != nil {
