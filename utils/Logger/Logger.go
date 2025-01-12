@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 	"time"
+
 	"github.com/joho/godotenv"
 )
 
@@ -34,13 +35,11 @@ func init() {
 }
 
 func NewLogger(level LogLevel) (*Logger, error) {
-	// 從環境變數取得 logPath，如果沒有設定則使用預設值 "./logs"
 	logDir := os.Getenv("logPath")
 	if logDir == "" {
 		logDir = "./logs"
 	}
 
-	// 確保日誌目錄存在
 	if err := os.MkdirAll(logDir, 0755); err != nil {
 		return nil, fmt.Errorf("無法創建日誌目錄: %v", err)
 	}
