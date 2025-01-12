@@ -1,0 +1,97 @@
+basePath: /
+definitions:
+  controllers.GeminiAPIErrorResponse:
+    properties:
+      detail:
+        example: 無效的輸入格式
+        type: string
+      error:
+        example: 處理請求時發生錯誤
+        type: string
+    type: object
+  controllers.GeminiAPIRequest:
+    properties:
+      message:
+        example: 你好
+        type: string
+    required:
+    - message
+    type: object
+  controllers.GeminiAPIResponse:
+    properties:
+      message:
+        example: 你好，我是 Gemini AI
+        type: string
+    type: object
+host: localhost:6382
+info:
+  contact: {}
+  description: 這是一個 Menu2What 的 API 服務
+  title: Menu2What API
+  version: "1.0"
+paths:
+  /api:
+    post:
+      consumes:
+      - application/json
+      description: 傳送訊息到 Gemini AI 並獲取回應
+      parameters:
+      - description: 請求內容
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.GeminiAPIRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.GeminiAPIResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/controllers.GeminiAPIErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controllers.GeminiAPIErrorResponse'
+      summary: Gemini AI API
+      tags:
+      - gemini
+  /api/image:
+    post:
+      consumes:
+      - multipart/form-data
+      description: 上傳圖片和文字到 Gemini AI 並獲取分析回應
+      parameters:
+      - description: 文字訊息
+        in: formData
+        name: message
+        required: true
+        type: string
+      - description: 圖片檔案
+        in: formData
+        name: image
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.GeminiAPIResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/controllers.GeminiAPIErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controllers.GeminiAPIErrorResponse'
+      summary: Gemini AI 圖文分析 API
+      tags:
+      - gemini
+swagger: "2.0"
