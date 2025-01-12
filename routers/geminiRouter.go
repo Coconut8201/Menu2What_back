@@ -31,7 +31,11 @@ func (r *GeminiRouter) SetRoutes() {
 		r.ctrl.Test(c)
 	})
 
-	r.GetRoutes().GET("/api", func(c *gin.Context) {
-		r.ctrl.GeminiAPI(c)
+	r.GetRoutes().POST("/api/text_only", func(c *gin.Context) {
+		r.ctrl.GeminiApiTextOnly(c)
+	})
+
+	r.GetRoutes().POST("/api/image_and_text", func(c *gin.Context) {
+		r.ctrl.GeminiApiImageAndText(c)
 	})
 }
