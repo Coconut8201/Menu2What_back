@@ -28,6 +28,10 @@ func (r *GeminiRouter) Init(url string, controller interfaces.GeminiInterface, r
 
 func (r *GeminiRouter) SetRoutes() {
 	r.GetRoutes().GET("/test", func(c *gin.Context) {
+		r.ctrl.Test(c)
+	})
+
+	r.GetRoutes().GET("/geminiapi", func(c *gin.Context) {
 		r.ctrl.GeminiAPI(c)
 	})
 }
