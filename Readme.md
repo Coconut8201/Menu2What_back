@@ -1,5 +1,6 @@
 待辦事項:
-- [ ] 加入gemini api
+- [X] 加入gemini api
+- [X] 修改gemini api 回傳內容（應該使用< apiResult >）
 
 
 下載依賴：
@@ -22,7 +23,12 @@ go run .
 http://localhost:6382
 ```
 
-測試：
+服務狀態：
 ```
-http://localhost:6382/api/test
+http://localhost:6382/ping
+```
+
+Swagger API Docs:
+```
+http://localhost:6382/swagger/index.html#/
 ```
