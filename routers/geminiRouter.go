@@ -31,7 +31,7 @@ func (r *GeminiRouter) SetRoutes() {
 		r.ctrl.Test(c)
 	})
 
-	r.GetRoutes().GET("/geminiapi", func(c *gin.Context) {
+	r.GetRoutes().GET("/api", func(c *gin.Context) {
 		r.ctrl.GeminiAPI(c)
 	})
 }
