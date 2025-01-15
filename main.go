@@ -1,9 +1,11 @@
 package main
 
 import (
+	"Menu2What_back/database"
 	_ "Menu2What_back/docs"
 	"Menu2What_back/routers"
 	"Menu2What_back/utils/Logger"
+
 	"fmt"
 	"log"
 
@@ -19,6 +21,14 @@ import (
 // @BasePath  /
 func main() {
 	engine := gin.Default()
+
+	// 資料庫連線
+	dbResponse := database.NewConnectDb()
+	if !dbResponse.Result {
+		log.Fatal("資料庫連線失敗:", *dbResponse.Message)
+	}
+	fmt.Println("資料庫連線成功！")
+	log.Println("資料庫連線成功！")
 
 	// Swagger 文檔路由要在其他路由之前
 	engine.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler,
