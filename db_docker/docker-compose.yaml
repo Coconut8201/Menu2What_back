@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb_container # 容器名稱/啟動的服務名稱
+    environment:
+      MYSQL_ROOT_PASSWORD: mypass # 帳號為root，密碼為mypass
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - "3306:3306" #端口映射，如果要改連線端口的話改前面的數字如 7458:3306
+    volumes:
+      - mariadb_data:/var/lib/mysql
+      - mariadb_config:/etc/mysql/conf.d
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --skip-character-set-client-handshake
+      - --max_connections=1000
+
+volumes:
+  mariadb_data:
+    driver: local
+  mariadb_config:
+    driver: local
+
+networks:
+  default:
+    driver: bridge
