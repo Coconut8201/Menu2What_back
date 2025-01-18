@@ -1,13 +1,14 @@
 package database
 
 import (
+	"Menu2What_back/global"
 	"Menu2What_back/utils/Logger"
-	"database/sql"
 	"fmt"
 	"log"
 	"os"
 
-	_ "github.com/go-sql-driver/mysql"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
 type NewConnectDbResponse struct {
@@ -37,7 +38,7 @@ func NewConnectDb() NewConnectDbResponse {
 	port := os.Getenv("Mariadb_Port")
 	dbname := os.Getenv("Mariadb_Database")
 
-	dbConnect := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s",
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
 		username,
 		password,
 		host,
@@ -45,28 +46,40 @@ func NewConnectDb() NewConnectDbResponse {
 		dbname,
 	)
 
-	if dbConnect == "" {
+	if dsn == "" {
 		logger.Info("資料庫連線設定錯誤：incorrect Mariadb_Url setting")
 		return createResponse(false, "incorrect Mariadb_Url setting")
 	}
 
-	db, err := sql.Open("mysql", dbConnect)
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		logger.Error("資料庫連線失敗: %v", err)
 		return createResponse(false, fmt.Sprintf("資料庫連線失敗: %v", err))
 	}
 
-	defer func() {
-		if err := db.Close(); err != nil {
-			logger.Error("關閉資料庫連線時發生錯誤: %v", err)
-		}
-	}()
+	// 獲取底層的 SQL DB 實例
+	sqlDB, err := db.DB()
+	if err != nil {
+		logger.Error("獲取資料庫實例失敗: %v", err)
+		return createResponse(false, fmt.Sprintf("獲取資料庫實例失敗: %v", err))
+	}
 
-	if err = db.Ping(); err != nil {
+	// 設置連接池參數
+	sqlDB.SetMaxIdleConns(10)
+	sqlDB.SetMaxOpenConns(100)
+
+	// 測試連線
+	if err = sqlDB.Ping(); err != nil {
 		logger.Error("資料庫 Ping 失敗: %v", err)
 		return createResponse(false, fmt.Sprintf("資料庫 Ping 失敗: %v", err))
 	}
 
+	global.DB = db
 	logger.Info("資料庫連線成功")
 	return createResponse(true, "資料庫連線成功")
+}
+
+// GetDB 返回全局 DB 實例
+func GetDB() *gorm.DB {
+	return global.DB
 }
