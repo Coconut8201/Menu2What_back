@@ -19,6 +19,8 @@ Menu2What_back/db_docker
 cd ./db_docker
 docker-compose up -d
 ```
+啟動後會在localhost 中的menu2What_Database 中看到相關的資料
+![img.png](img.png)
 
 **PS. 這個服務有設定資料卷(volumes)所以就算刪掉整個資料庫的服務資料也會保存** \
 **PS. 開啟docker後，如關閉服務，docker 依然會運行，docker 很肥記得關掉哈哈哈**
