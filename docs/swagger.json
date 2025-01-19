@@ -9,6 +9,71 @@
     "host": "localhost:6382",
     "basePath": "/",
     "paths": {
+        "/api/user/register": {
+            "post": {
+                "description": "創建新用戶帳號",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "用戶註冊",
+                "parameters": [
+                    {
+                        "description": "用戶註冊資訊",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controllers.UserRegistrationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "註冊成功",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "註冊失敗",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.UserRegistrationErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/test": {
+            "get": {
+                "description": "測試用戶控制器是否正常運作",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "測試用戶控制器",
+                "responses": {
+                    "200": {
+                        "description": "返回成功訊息",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
         "/gemini/api/image_and_text": {
             "post": {
                 "description": "上傳圖片和文字到 Gemini AI 並獲取分析回應",
@@ -139,6 +204,36 @@
                 "message": {
                     "type": "string",
                     "example": "你好，我是 Gemini AI"
+                }
+            }
+        },
+        "controllers.UserRegistrationErrorResponse": {
+            "type": "object",
+            "properties": {
+                "detail": {
+                    "type": "string",
+                    "example": "無效的輸入格式"
+                },
+                "error": {
+                    "type": "string",
+                    "example": "處理請求時發生錯誤"
+                }
+            }
+        },
+        "controllers.UserRegistrationRequest": {
+            "type": "object",
+            "required": [
+                "userName",
+                "userPassword"
+            ],
+            "properties": {
+                "userName": {
+                    "type": "string",
+                    "example": "admin"
+                },
+                "userPassword": {
+                    "type": "string",
+                    "example": "password"
                 }
             }
         }

@@ -23,6 +23,27 @@ definitions:
         example: 你好，我是 Gemini AI
         type: string
     type: object
+  controllers.UserRegistrationErrorResponse:
+    properties:
+      detail:
+        example: 無效的輸入格式
+        type: string
+      error:
+        example: 處理請求時發生錯誤
+        type: string
+    type: object
+  controllers.UserRegistrationRequest:
+    properties:
+      userName:
+        example: admin
+        type: string
+      userPassword:
+        example: password
+        type: string
+    required:
+    - userName
+    - userPassword
+    type: object
 host: localhost:6382
 info:
   contact: {}
@@ -30,6 +51,49 @@ info:
   title: Menu2What API
   version: "1.0"
 paths:
+  /api/user/register:
+    post:
+      consumes:
+      - application/json
+      description: 創建新用戶帳號
+      parameters:
+      - description: 用戶註冊資訊
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.UserRegistrationRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 註冊成功
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: 註冊失敗
+          schema:
+            $ref: '#/definitions/controllers.UserRegistrationErrorResponse'
+      summary: 用戶註冊
+      tags:
+      - User
+  /api/user/test:
+    get:
+      consumes:
+      - application/json
+      description: 測試用戶控制器是否正常運作
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回成功訊息
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 測試用戶控制器
+      tags:
+      - User
   /gemini/api/image_and_text:
     post:
       consumes:

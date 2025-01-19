@@ -4,6 +4,7 @@
 - [ ] 修改gemini api 回傳內容（應該使用< apiResult >）
 - [ ] 修改確認是否需要上傳pdf 的功能
 - [X] 修復logger 系統
+- [ ] user 創建使用者功能
 
 1. 下載：
 ```

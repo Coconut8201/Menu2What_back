@@ -2,7 +2,9 @@ package database
 
 import (
 	"Menu2What_back/global"
+	"Menu2What_back/models"
 	"Menu2What_back/utils/Logger"
+
 	"fmt"
 	"log"
 	"os"
@@ -72,6 +74,12 @@ func NewConnectDb() NewConnectDbResponse {
 	if err = sqlDB.Ping(); err != nil {
 		logger.Error("資料庫 Ping 失敗: %v", err)
 		return createResponse(false, fmt.Sprintf("資料庫 Ping 失敗: %v", err))
+	}
+
+	// 在設置完資料庫連線後，加入自動遷移
+	if err := db.AutoMigrate(&models.User{}); err != nil {
+		logger.Error("資料表遷移失敗: %v", err)
+		return createResponse(false, fmt.Sprintf("資料表遷移失敗: %v", err))
 	}
 
 	global.DB = db
