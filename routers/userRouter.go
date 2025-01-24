@@ -42,4 +42,8 @@ func (r *UserRouter) SetRoutes() {
 	r.GetRoutes().POST("/login", func(c *gin.Context) {
 		r.ctrl.UserLogin(c)
 	})
+
+	r.GetRoutes().POST("/logout", func(c *gin.Context) {
+		r.ctrl.UserLogout(c)
+	})
 }

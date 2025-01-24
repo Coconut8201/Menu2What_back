@@ -4,6 +4,8 @@ import (
 	"Menu2What_back/interfaces"
 	"Menu2What_back/services/user"
 
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
@@ -109,7 +111,7 @@ func (u *UserController) UserLogin(c *gin.Context) {
 	}
 
 	// 驗證使用者
-	user, err := user.Authenticate(u.DB, req.UserName, req.UserPassword)
+	authenticatedUser, err := user.Authenticate(u.DB, req.UserName, req.UserPassword)
 	if err != nil {
 		c.JSON(400, UserLoginErrorResponse{
 			Error:  "登入失敗",
@@ -119,7 +121,7 @@ func (u *UserController) UserLogin(c *gin.Context) {
 	}
 
 	// 產生JWT token
-	token, err := user.GenerateJWT() // 使用 User 結構體的方法
+	token, err := authenticatedUser.GenerateJWT() // 使用 User 結構體的方法
 	if err != nil {
 		c.JSON(500, UserLoginErrorResponse{
 			Error:  "登入失敗",
@@ -134,5 +136,13 @@ func (u *UserController) UserLogin(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"message": "登入成功",
 		"token":   token,
+	})
+}
+
+func (u *UserController) UserLogout(c *gin.Context) {
+	// 清除 JWT cookie
+	c.SetCookie("jwt", "", -1, "/", "", false, true)
+	c.JSON(http.StatusOK, gin.H{
+		"message": "成功登出",
 	})
 }
