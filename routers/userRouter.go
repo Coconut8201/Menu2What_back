@@ -38,4 +38,8 @@ func (r *UserRouter) SetRoutes() {
 	r.GetRoutes().POST("/register", func(c *gin.Context) {
 		r.ctrl.UserRegistration(c)
 	})
+
+	r.GetRoutes().POST("/login", func(c *gin.Context) {
+		r.ctrl.UserLogin(c)
+	})
 }
