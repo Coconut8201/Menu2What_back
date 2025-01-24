@@ -1,7 +1,7 @@
 待辦事項:
 - [X] 加入gemini api
 - [X] 新增gemini api 上傳圖片和文字功能
-- [ ] 修改gemini api 回傳內容（應該使用< apiResult >）
+- [x] api 回傳內容（應該使用< apiResult >）
 - [X] 修復logger 系統
 - [x] user 創建使用者功能
 - [x] user 登入登出功能

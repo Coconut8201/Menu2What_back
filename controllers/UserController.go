@@ -3,6 +3,7 @@ package controllers
 import (
 	"Menu2What_back/interfaces"
 	"Menu2What_back/services/user"
+	"Menu2What_back/utils/ApiResult"
 
 	"net/http"
 
@@ -48,9 +49,9 @@ type UserLoginErrorResponse struct {
 // @Success 200 {object} map[string]interface{} "返回成功訊息"
 // @Router /api/user/test [get]
 func (u *UserController) Test(c *gin.Context) {
-	c.JSON(200, gin.H{
+	c.JSON(200, ApiResult.NewSuccessResult(200, gin.H{
 		"message": "user success",
-	})
+	}))
 }
 
 // UserRegistration godoc 使用者註冊
@@ -67,25 +68,18 @@ func (u *UserController) UserRegistration(c *gin.Context) {
 	var req UserRegistrationRequest
 
 	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(400, UserRegistrationErrorResponse{
-			Error:  "使用者資訊錯誤",
-			Detail: err.Error(),
-		})
+		c.JSON(400, ApiResult.NewFailResult(400, "使用者資訊錯誤："+err.Error()))
 		return
 	}
 
-	// 呼叫創建使用者服務
 	if err := user.CreateUser(u.DB, req.UserName, req.UserPassword); err != nil {
-		c.JSON(400, UserRegistrationErrorResponse{
-			Error:  "註冊失敗",
-			Detail: err.Error(),
-		})
+		c.JSON(400, ApiResult.NewFailResult(400, "註冊失敗："+err.Error()))
 		return
 	}
 
-	c.JSON(200, gin.H{
+	c.JSON(200, ApiResult.NewSuccessResult(200, gin.H{
 		"message": "註冊成功",
-	})
+	}))
 }
 
 // UserLogin godoc 使用者登入
@@ -101,48 +95,34 @@ func (u *UserController) UserRegistration(c *gin.Context) {
 func (u *UserController) UserLogin(c *gin.Context) {
 	var req UserLoginRequest
 
-	// 解析請求
 	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(400, UserLoginErrorResponse{
-			Error:  "登入資訊錯誤",
-			Detail: err.Error(),
-		})
+		c.JSON(400, ApiResult.NewFailResult(400, "登入資訊錯誤："+err.Error()))
 		return
 	}
 
-	// 驗證使用者
 	authenticatedUser, err := user.Authenticate(u.DB, req.UserName, req.UserPassword)
 	if err != nil {
-		c.JSON(400, UserLoginErrorResponse{
-			Error:  "登入失敗",
-			Detail: "無效的帳號或密碼",
-		})
+		c.JSON(400, ApiResult.NewFailResult(400, "登入失敗：無效的帳號或密碼"))
 		return
 	}
 
-	// 產生JWT token
-	token, err := authenticatedUser.GenerateJWT() // 使用 User 結構體的方法
+	token, err := authenticatedUser.GenerateJWT()
 	if err != nil {
-		c.JSON(500, UserLoginErrorResponse{
-			Error:  "登入失敗",
-			Detail: "無法產生授權token",
-		})
+		c.JSON(500, ApiResult.NewFailResult(500, "登入失敗：無法產生授權token"))
 		return
 	}
 
-	// 設置cookie
 	c.SetCookie("jwt", token, 3600, "/", "", false, true)
 
-	c.JSON(200, gin.H{
+	c.JSON(200, ApiResult.NewSuccessResult(200, gin.H{
 		"message": "登入成功",
 		"token":   token,
-	})
+	}))
 }
 
 func (u *UserController) UserLogout(c *gin.Context) {
-	// 清除 JWT cookie
 	c.SetCookie("jwt", "", -1, "/", "", false, true)
-	c.JSON(http.StatusOK, gin.H{
+	c.JSON(http.StatusOK, ApiResult.NewSuccessResult(200, gin.H{
 		"message": "成功登出",
-	})
+	}))
 }

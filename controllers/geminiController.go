@@ -2,10 +2,11 @@ package controllers
 
 import (
 	"Menu2What_back/interfaces"
+	"Menu2What_back/utils/ApiResult"
 	"Menu2What_back/utils/tools"
-	"mime/multipart"
 
 	"io"
+	"mime/multipart"
 
 	"github.com/gin-gonic/gin"
 )
@@ -37,9 +38,9 @@ type GeminiAPIRequestImageAndText struct {
 }
 
 func (g *GeminiController) Test(c *gin.Context) {
-	c.JSON(200, gin.H{
+	c.JSON(200, ApiResult.NewSuccessResult(200, gin.H{
 		"message": "gemini success",
-	})
+	}))
 }
 
 // GeminiApiTextOnly godoc
@@ -57,10 +58,7 @@ func (g *GeminiController) GeminiApiTextOnly(c *gin.Context) {
 	var req GeminiAPIRequest
 
 	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(400, GeminiAPIErrorResponse{
-			Error:  "無法解析請求數據",
-			Detail: err.Error(),
-		})
+		c.JSON(400, ApiResult.NewFailResult(400, "無法解析請求數據"))
 		return
 	}
 
@@ -79,15 +77,13 @@ func (g *GeminiController) GeminiApiTextOnly(c *gin.Context) {
 
 	result := <-resultChan
 	if result.err != nil {
-		c.JSON(500, GeminiAPIErrorResponse{
-			Error: result.err.Error(),
-		})
+		c.JSON(500, ApiResult.NewFailResult(500, result.err.Error()))
 		return
 	}
 
-	c.JSON(200, GeminiAPIResponse{
-		Message: result.response,
-	})
+	c.JSON(200, ApiResult.NewSuccessResult(200, gin.H{
+		"message": result.response,
+	}))
 }
 
 // GeminiApiImageAndText godoc
@@ -105,17 +101,12 @@ func (g *GeminiController) GeminiApiTextOnly(c *gin.Context) {
 func (g *GeminiController) GeminiApiImageAndText(c *gin.Context) {
 	var req GeminiAPIRequestImageAndText
 	if err := c.ShouldBind(&req); err != nil {
-		c.JSON(400, GeminiAPIErrorResponse{
-			Error:  "無法解析請求數據",
-			Detail: err.Error(),
-		})
+		c.JSON(400, ApiResult.NewFailResult(400, "無法解析請求數據"))
 		return
 	}
 
 	if req.Image == nil {
-		c.JSON(400, GeminiAPIErrorResponse{
-			Error: "未提供圖片",
-		})
+		c.JSON(400, ApiResult.NewFailResult(400, "未提供圖片"))
 		return
 	}
 
@@ -126,20 +117,14 @@ func (g *GeminiController) GeminiApiImageAndText(c *gin.Context) {
 
 	file, err := req.Image.Open()
 	if err != nil {
-		c.JSON(400, GeminiAPIErrorResponse{
-			Error:  "無法開啟圖片檔案",
-			Detail: err.Error(),
-		})
+		c.JSON(400, ApiResult.NewFailResult(400, "無法開啟圖片檔案"))
 		return
 	}
 	defer file.Close()
 
 	imageBytes, err := io.ReadAll(file)
 	if err != nil {
-		c.JSON(400, GeminiAPIErrorResponse{
-			Error:  "無法讀取圖片數據",
-			Detail: err.Error(),
-		})
+		c.JSON(400, ApiResult.NewFailResult(400, "無法讀取圖片數據"))
 		return
 	}
 
@@ -153,13 +138,11 @@ func (g *GeminiController) GeminiApiImageAndText(c *gin.Context) {
 
 	result := <-resultChan
 	if result.err != nil {
-		c.JSON(500, GeminiAPIErrorResponse{
-			Error: result.err.Error(),
-		})
+		c.JSON(500, ApiResult.NewFailResult(500, result.err.Error()))
 		return
 	}
 
-	c.JSON(200, GeminiAPIResponse{
-		Message: result.response,
-	})
+	c.JSON(200, ApiResult.NewSuccessResult(200, gin.H{
+		"message": result.response,
+	}))
 }
