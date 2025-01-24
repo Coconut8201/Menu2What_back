@@ -82,7 +82,7 @@ func (u *UserController) UserRegistration(c *gin.Context) {
 	}))
 }
 
-// UserLogin godoc 使用者登入
+// UserToken godoc 使用者登入
 // @Summary 用戶登入
 // @Description 使用帳號密碼進行登入
 // @Tags User
@@ -92,7 +92,7 @@ func (u *UserController) UserRegistration(c *gin.Context) {
 // @Success 200 {object} map[string]interface{} "登入成功"
 // @Failure 400 {object} UserLoginErrorResponse "登入失敗"
 // @Router /api/user/login [post]
-func (u *UserController) UserLogin(c *gin.Context) {
+func (u *UserController) UserToken(c *gin.Context) {
 	var req UserLoginRequest
 
 	if err := c.ShouldBindJSON(&req); err != nil {

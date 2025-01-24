@@ -7,6 +7,6 @@ import (
 type UserInterface interface {
 	Test(c *gin.Context)
 	UserRegistration(c *gin.Context)
-	UserLogin(c *gin.Context)
+	UserToken(c *gin.Context)
 	UserLogout(c *gin.Context)
 }
