@@ -4,6 +4,7 @@ import (
 	"Menu2What_back/interfaces"
 	"Menu2What_back/services/user"
 	"Menu2What_back/utils/ApiResult"
+	"Menu2What_back/utils/tools"
 
 	"net/http"
 
@@ -100,13 +101,13 @@ func (u *UserController) UserToken(c *gin.Context) {
 		return
 	}
 
-	authenticatedUser, err := user.Authenticate(u.DB, req.UserName, req.UserPassword)
+	authenticatedUser, err := tools.Authenticate(u.DB, req.UserName, req.UserPassword)
 	if err != nil {
 		c.JSON(400, ApiResult.NewFailResult(400, "登入失敗：無效的帳號或密碼"))
 		return
 	}
 
-	token, err := authenticatedUser.GenerateJWT()
+	token, err := tools.GenerateJWT(authenticatedUser)
 	if err != nil {
 		c.JSON(500, ApiResult.NewFailResult(500, "登入失敗：無法產生授權token"))
 		return

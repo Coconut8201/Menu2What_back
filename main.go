@@ -27,8 +27,6 @@ func main() {
 	if !dbResponse.Result {
 		log.Fatal("資料庫連線失敗:", *dbResponse.Message)
 	}
-	fmt.Println("資料庫連線成功！")
-	log.Println("資料庫連線成功！")
 
 	// Swagger 文檔路由要在其他路由之前
 	engine.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler,
