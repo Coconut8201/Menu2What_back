@@ -9,6 +9,6 @@ type LineBotInterface interface {
 	LineBotEcho(c *gin.Context)
 }
 
-func LineBotEcho(c *gin.Context){
+func LineBotEcho(c *gin.Context) {
 
 }

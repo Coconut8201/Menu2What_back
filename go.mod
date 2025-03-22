@@ -3,7 +3,9 @@ module Menu2What_back
 go 1.23.4
 
 require (
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.10.0
+	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/google/generative-ai-go v0.19.0
 	github.com/joho/godotenv v1.5.1
 	github.com/swaggo/files v1.0.1
@@ -14,8 +16,6 @@ require (
 	gorm.io/driver/mysql v1.5.7
 	gorm.io/gorm v1.25.12
 )
-
-require github.com/golang-jwt/jwt v3.2.2+incompatible
 
 require (
 	cloud.google.com/go v0.118.0 // indirect
